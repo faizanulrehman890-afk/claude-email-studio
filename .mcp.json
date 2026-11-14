@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "email-outbox": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["mcp/email_server.py"],
+      "env": {}
+    }
+  }
+}

@@ -1,0 +1,3 @@
+# Practice sends from the email-outbox MCP server
+outbox/
+__pycache__/

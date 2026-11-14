@@ -25,6 +25,8 @@ data/subscribers.csv          FAKE sample subscribers for testing merge tags
 drafts/<slug>/email.html      HTML version of each campaign
 drafts/<slug>/email.txt       plain-text version of each campaign
 notes/                        research and decision notes
+mcp/email_server.py           local practice-outbox MCP server (no network)
+outbox/<slug>/                practice sends (git-ignored)
 .claude/skills/write-email/   the skill for drafting emails (use it)
 ```
 
@@ -48,4 +50,4 @@ Every subscriber in `data/subscribers.csv` has one `segment`:
 4. **Only `@example.com`** for email addresses and **only `example.com`** for links, in drafts, data and tests. Never a real customer address or a live URL.
 5. **Facts come from `brand/products.md`.** Don't invent prices, dates, discounts or contents. If it isn't there, ask.
 6. **One email, one call to action.**
-7. **Never send.** No API keys in files, no calls to an email provider from this repo.
+7. **Never send for real.** No API keys in files, no calls to an email provider from this repo. The only "sending" allowed is a practice send through the local `email-outbox` MCP tools (`send_test_email`, `list_outbox`, `get_outbox_stats`, in `mcp/email_server.py`, registered in `.mcp.json`). They write to `outbox/<slug>/` on disk, accept only `@example.com` recipients, and never touch the network.
