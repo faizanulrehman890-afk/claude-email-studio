@@ -1,0 +1,13 @@
+campaign_slug,segment,variant,sent_count,opened_count,clicked_count,unsubscribed_count
+steep-club-launch,new,control,320,118,11,2
+steep-club-launch,new,A,318,131,15,1
+steep-club-launch,active,control,1240,521,68,3
+steep-club-launch,active,B,1236,563,87,2
+steep-club-launch,vip,control,415,262,49,0
+steep-club-launch,vip,A,412,279,58,0
+steep-club-launch,lapsed,control,1480,281,22,11
+steep-club-launch,lapsed,C,1475,309,31,8
+winback-tea,new,control,180,52,6,1
+winback-tea,active,control,640,237,31,1
+winback-tea,vip,control,210,118,19,0
+winback-tea,lapsed,control,1450,302,41,9
