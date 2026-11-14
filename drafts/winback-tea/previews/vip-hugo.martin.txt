@@ -1,0 +1,44 @@
+[PREVIEW ONLY, not for sending. segment=vip; to=hugo.martin@example.com; source=drafts/winback-tea]
+
+Subject: Three teas, still on the shelf for you
+Preview: A bright Darjeeling, a grassy sencha, a toasty oolong. No rush.
+
+Kettlebird Tea
+
+Hi Hugo,
+
+Thank you for all the pots you've brewed with us. It means a great deal to a
+small tea company like ours.
+
+It's been a little while, and we hope the kettle has been kind to you.
+We just wanted to say hello.
+
+Our three flagship teas are still here on the shelf, each from a single
+origin and each with its own way of filling the room when you pour.
+
+- First Light Darjeeling, a first flush from Darjeeling, India. Bright and
+  floral, with a muscatel finish like ripe apricot. $18 / 50 g. Steep at
+  85°C / 185°F for 3 minutes.
+
+- Misty Ridge Sencha, from Shizuoka, Japan. Grassy, brothy, a clean
+  sweetness. $16 / 50 g. Steep at 70°C / 158°F for 1.5 minutes.
+
+- Copper Hollow Oolong, from Nantou, Taiwan. Toasty, buttery, roasted nuts
+  and honey. $22 / 50 g. Steep at 90°C / 194°F for 3 minutes, then again:
+  it re-steeps 3+ times.
+
+There's nothing to decide today. When you have a quiet minute, have a look
+and pick the one that sounds like your kind of morning.
+
+Browse our teas:
+https://example.com/teas?utm_source=email&utm_campaign=winback-tea
+
+Until the next pot,
+The Kettlebird team
+
+--
+You're getting this because you subscribed to Kettlebird Tea emails.
+Kettlebird Tea, 14 Wren Lane, Suite 2, Portland, OR 97201, USA
+
+Unsubscribe: https://example.com/unsubscribe?id=preview-vip-9
+Manage preferences: https://example.com/preferences?id=preview-vip-9
