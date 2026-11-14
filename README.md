@@ -105,7 +105,7 @@ A small Python MCP server (standard library only, no network) registered in `.mc
 
 1. **Clone and open the repo**
    ```sh
-   git clone <repo-url> My-Email-Studio
+   git clone https://github.com My-Email-Studio
    cd My-Email-Studio
    ```
 
