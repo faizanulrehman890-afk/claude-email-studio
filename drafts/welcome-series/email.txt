@@ -1,0 +1,42 @@
+Subject: The kettle's on. Welcome in.
+Preview: Who we are, and a bright, floral Darjeeling to start your first pot.
+
+Kettlebird Tea
+
+Hi {{first_name|there}},
+
+Welcome in. Pull up a chair while the kettle starts to sing.
+
+We're Kettlebird Tea, a small loose-leaf tea company. We source single-origin
+teas from small farms and send them straight to you, so each cup tastes of
+one place.
+
+From us you'll get brewing tips, stories behind the leaf, and word when a new
+tea arrives. Nothing loud, nothing rushed.
+
+If you're wondering where to begin, we'd pour you a cup of First Light
+Darjeeling. It's a first flush from Darjeeling, India: bright and floral,
+with a muscatel finish like ripe apricot.
+
+To brew it:
+
+- Heat water to 85°C / 185°F
+- Steep for 3 minutes
+- Pour, and take a quiet minute with the first sip
+
+It's $18 for a 50 g pouch. If you'd rather something toasty or grassy,
+Copper Hollow Oolong and Misty Ridge Sencha are waiting on the same shelf.
+
+Find your first tea:
+https://example.com/teas?utm_source=email&utm_campaign=welcome-series
+
+Steep slowly,
+Mara & the Kettlebird team
+
+--
+
+You're getting this because you subscribed to Kettlebird Tea emails.
+Kettlebird Tea, 14 Wren Lane, Suite 2, Portland, OR 97201, USA
+
+Unsubscribe: https://example.com/unsubscribe?id={{subscriber_id}}
+Manage preferences: https://example.com/preferences?id={{subscriber_id}}
