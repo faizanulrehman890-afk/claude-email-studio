@@ -1,0 +1,6 @@
+{
+  "new": "Welcome to Kettlebird. We're so glad you found us, and we hope this finds you with the kettle already warming.",
+  "active": "",
+  "vip": "Thank you for all the pots of {{favorite_tea|Kettlebird tea}} you've brewed with us. You're a big part of why we wanted to try something new.",
+  "lapsed": "It's been a little while, and we've missed you. {{favorite_tea|Your old favorite}} is still on the shelf, and there's something new we'd love to show you."
+}
