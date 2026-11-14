@@ -9,7 +9,8 @@ hard rules, reading the *staged* content (the index), not the working tree:
               in files under drafts/ or data/.
   3. Banned:  banned words/phrases from brand/voice-guide.md, in email copy:
               drafts/*/email.html, drafts/*/email.txt, drafts/*/previews/*,
-              drafts/*/ab-variants.md.
+              drafts/*/ab-variants.md. Drafts with drafts/<slug>/brand.txt
+              also get that brand's own list (brands/<brand>/voice-guide.md).
   4. Secrets: .env files, private-key files, and content that looks like an
               API key or private key.
 
@@ -26,7 +27,10 @@ import fnmatch
 import re
 import subprocess
 import sys
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from brand_profile import brand_of_draft, load_profile  # noqa: E402
 
 try:
     sys.stderr.reconfigure(encoding="utf-8")
@@ -158,6 +162,25 @@ def is_secret_name(path: str) -> bool:
 def audit(paths: list[str], from_index: bool) -> list[str]:
     problems: list[str] = []
     patterns = [(t, term_pattern(t)) for t in load_banned(from_index)]
+    brand_patterns: dict[str, list] = {}
+
+    def read_any(rel: str) -> str | None:
+        return read_blob(rel, from_index) or read_blob(rel, False)
+
+    def patterns_for(path: str) -> list:
+        parts = PurePosixPath(path).parts
+        if len(parts) < 3 or parts[0] != "drafts":
+            return patterns
+        slug_dir = f"drafts/{parts[1]}"
+        if slug_dir not in brand_patterns:
+            try:
+                extra = load_profile(brand_of_draft(slug_dir, read_any), read_any)["banned"]
+            except ValueError as exc:
+                problems.append(str(exc))
+                extra = []
+            known = {t for t, _ in patterns}
+            brand_patterns[slug_dir] = patterns + [(t, term_pattern(t)) for t in extra if t not in known]
+        return brand_patterns[slug_dir]
 
     for path in paths:
         if is_secret_name(path):
@@ -178,7 +201,7 @@ def audit(paths: list[str], from_index: bool) -> list[str]:
                     problems.append(f"{path}:{line_of(text, m.start())}: link to '{m.group(1)}' is not {ALLOWED_DOMAIN}")
 
         if is_copy(path):
-            for term, pat in patterns:
+            for term, pat in patterns_for(path):
                 for m in pat.finditer(text):
                     problems.append(f"{path}:{line_of(text, m.start())}: banned word '{m.group(0)}' (matches '{term}')")
 

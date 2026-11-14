@@ -84,6 +84,19 @@ def load_banned(root: Path) -> list[str]:
     return (terms or FALLBACK_BANNED) + EXTRA_BANNED
 
 
+def brand_banned(root: Path, rel: Path) -> list[str]:
+    """Extra banned words for a non-default brand (drafts/<slug>/brand.txt)."""
+    if len(rel.parts) < 2:
+        return []
+    try:
+        sys.path.insert(0, str(root / "scripts"))
+        from brand_profile import fs_reader, brand_of_draft, load_profile
+        read = fs_reader(root)
+        return load_profile(brand_of_draft(f"drafts/{rel.parts[0]}", read), read)["banned"]
+    except Exception:
+        return []
+
+
 def term_pattern(term: str) -> re.Pattern[str]:
     """Case-insensitive pattern that also catches other forms (unlocks, elevated, leveraging)."""
     words = re.split(r"[\s\-]+", term.replace("’", "'"))
@@ -154,7 +167,7 @@ def main() -> int:
             )
 
     if target.suffix.lower() in COPY_SUFFIXES and target.name.lower() not in COPY_EXCLUDE_NAMES:
-        for term in dict.fromkeys(load_banned(root)):
+        for term in dict.fromkeys(load_banned(root) + brand_banned(root, rel)):
             for m in term_pattern(term).finditer(text):
                 problems.append(
                     f"line {line_of(text, m.start())}: banned word/phrase '{m.group(0)}' "

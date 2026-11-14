@@ -7,6 +7,16 @@ description: Draft Kettlebird Tea marketing emails (welcome, product launch, new
 
 This skill produces a **draft only**. It never sends email, calls an email API, or adds real recipient addresses.
 
+## Brand override (optional): `--brand <brand>`
+
+The default brand is Kettlebird Tea. If the request names another brand (e.g. `--brand rise-and-crumb`, "for Rise & Crumb"), read `.claude/skills/switch-brand/SKILL.md` first. Then:
+
+- write `drafts/<slug>/brand.txt` containing only the brand slug;
+- everywhere below, read `brand/voice-guide.md` → `brands/<brand>/voice-guide.md` (the house banned list in `brand/voice-guide.md` still applies), `brand/products.md` → `brands/<brand>/products.md`, and take the footer **address and reason line** from the `## Email footer` table in `brands/<brand>/products.md` instead of `CLAUDE.md`;
+- Kettlebird product names and sign-offs in this skill are examples only.
+
+Every other `CLAUDE.md` hard rule (example.com only, one CTA, full footer, no real sends) is unchanged.
+
 ## Step 1 — Load the brand sources (required)
 
 Read all three before writing a word:

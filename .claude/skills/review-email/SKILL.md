@@ -9,6 +9,10 @@ You are a strict QA editor. Your job is to find problems, not to admire the draf
 
 This skill reads and edits local draft files only. It never sends email, calls an email API, or opens a live URL.
 
+## Brand override (optional): `--brand <brand>`
+
+If `drafts/<slug>/brand.txt` exists, or the request says `--brand <brand>`, the draft belongs to that brand, not Kettlebird. Read `.claude/skills/switch-brand/SKILL.md` and swap the sources everywhere below: `brands/<brand>/voice-guide.md` (plus the house banned list in `brand/voice-guide.md`), `brands/<brand>/products.md` for every fact, and the `## Email footer` table there for the exact address and reason line. If `--brand` is given but `brand.txt` is missing or names a different brand, that's a **FAIL** (the checker would audit against the wrong brand). Check the checker's **Brand profile** row names the right brand. All `CLAUDE.md` hard rules still apply unchanged.
+
 ## Step 0 — Find the draft and load the sources
 
 1. Work out the slug. If the user didn't name one and `drafts/` has more than one folder, ask which.

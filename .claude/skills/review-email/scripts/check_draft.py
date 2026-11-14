@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Mechanical QA checks for a Kettlebird Tea draft in drafts/<slug>/.
+"""Mechanical QA checks for an email draft in drafts/<slug>/.
+
+Brand-aware: the default brand is Kettlebird Tea (brand/ + CLAUDE.md). A draft
+with drafts/<slug>/brand.txt (e.g. "rise-and-crumb") is checked against
+brands/<brand>/ instead: its footer address, reason line and extra banned
+words. The CLAUDE.md hard rules (example.com only, one CTA, full footer, house
+banned words) apply to every brand. See scripts/brand_profile.py.
 
 Usage (from the repo root):
     python .claude/skills/review-email/scripts/check_draft.py drafts/<slug>
@@ -19,6 +25,9 @@ import sys
 from html.parser import HTMLParser
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "scripts"))
+from brand_profile import fs_reader, brand_of_draft, load_profile  # noqa: E402
+
 BANNED = re.compile(
     r"delv\w*|unlock\w*|game[\s-]?changer\w*|elevat\w*|revolutionar\w*|synerg\w*|"
     r"seamless\w*|leverag\w*|supercharg\w*|next[\s-]?level|must[\s-]?have\w*|"
@@ -32,7 +41,20 @@ EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+")
 TAG_RE = re.compile(r"\{\{\s*([a-zA-Z_]+)")
 UNSUB = "https://example.com/unsubscribe?id="
 PREFS = "https://example.com/preferences?id="
-REASON = "You're getting this because you subscribed to Kettlebird Tea emails."
+
+
+def term_pattern(term):
+    """Case-insensitive; also catches other forms (magical, unlocks, elevated)."""
+    words = re.split(r"[\s\-]+", term.replace("’", "'"))
+    parts = [re.escape(w).replace("'", "['’]") for w in words]
+    if len(parts) == 1:
+        stem = parts[0]
+        if len(stem) > 4 and stem.endswith("e"):
+            stem = stem[:-1]  # elevate -> elevat(e|ed|ing)
+        body = stem + r"\w*"
+    else:
+        body = r"[\s\-]+".join(parts)
+    return re.compile(r"(?<![\w])" + body + r"(?![\w])", re.I)
 
 results = []  # (status, check, detail)
 
@@ -108,14 +130,26 @@ def main(folder):
     h_raw = h_path.read_text(encoding="utf-8")
     both = [(h_path, hl), (t_path, tl)]
 
-    # Address from CLAUDE.md (hard rule 3), not from an older draft.
-    claude = Path("CLAUDE.md").read_text(encoding="utf-8")
-    m = re.search(r"^\s*(Kettlebird Tea, [^*\n]+?USA)", claude, re.M)
-    address = m.group(1).strip() if m else None
+    # Brand profile: address from CLAUDE.md (default brand) or from
+    # brands/<brand>/products.md, never from an older draft.
+    read = fs_reader(Path.cwd())
+    try:
+        brand = brand_of_draft(d.as_posix(), read)
+    except ValueError as exc:
+        report("FAIL", "Brand profile", str(exc))
+        return finish()
+    prof = load_profile(brand, read)
+    address, reason = prof["address"], prof["reason"]
+    report("FAIL" if prof["errors"] else "PASS", "Brand profile",
+           "; ".join(prof["errors"]) or
+           f"{prof['name']} ({brand}): {prof['voice_guide']}, {prof['products']}")
+    caps_ok = CAPS_OK | set(re.findall(r"\b[A-Z]{2,}\b", address or ""))
 
-    # --- Banned words -------------------------------------------------------
-    hits = [f"{p.name}:{i}: '{mm.group(0)}'" for p, ls in both
-            for i, l in enumerate(ls, 1) for mm in BANNED.finditer(l)]
+    # --- Banned words (house list + brand list) ------------------------------
+    pats = [BANNED] + [term_pattern(t) for t in prof["banned"]]
+    hits = sorted({f"{p.name}:{i}: '{mm.group(0)}'" for p, ls in both
+                   for i, l in enumerate(ls, 1) for pat in pats
+                   for mm in pat.finditer(html.unescape(l))})
     report("FAIL" if hits else "PASS", "Banned words (case-insensitive)",
            "; ".join(hits) or "0 hits in both files")
 
@@ -126,13 +160,14 @@ def main(folder):
     for ln, txt in v.chunks:
         vis_lines.setdefault(ln, []).append(txt)
     caps = [f"email.html:{ln}: {w}" for ln, ts in vis_lines.items()
-            for w in re.findall(r"\b[A-Z]{2,}\b", " ".join(ts)) if w not in CAPS_OK]
+            for w in re.findall(r"\b[A-Z]{2,}\b", " ".join(ts)) if w not in caps_ok]
     caps += [f"email.txt:{i}: {w}" for i, l in enumerate(tl, 1)
-             for w in re.findall(r"\b[A-Z]{2,}\b", l) if w not in CAPS_OK]
+             for w in re.findall(r"\b[A-Z]{2,}\b", l) if w not in caps_ok]
     for i, l in enumerate(hl, 1):  # <title> and preheader live outside visible text
         for seg in re.findall(r"<title>(.*?)</title>|display:\s*none[^>]*>([^<]*)", l):
-            caps += [f"email.html:{i}: {w}" for w in re.findall(r"\b[A-Z]{2,}\b", " ".join(seg)) if w not in CAPS_OK]
-    report("FAIL" if caps else "PASS", "No ALL CAPS words", "; ".join(caps) or "none (USA/OR allowed)")
+            caps += [f"email.html:{i}: {w}" for w in re.findall(r"\b[A-Z]{2,}\b", " ".join(seg)) if w not in caps_ok]
+    report("FAIL" if caps else "PASS", "No ALL CAPS words", "; ".join(caps) or
+           f"none ({'/'.join(sorted(caps_ok - {'DOCTYPE', 'UTM', 'CTA'}))} allowed)")
     bangs = {}
     for p, ls in both:
         for i, l in enumerate(ls, 1):
@@ -179,7 +214,7 @@ def main(folder):
         missing = []
         if not address or address not in plain:
             missing.append(f"exact address '{address}'")
-        if REASON not in plain:
+        if not reason or reason not in plain:
             missing.append("reason line")
         if UNSUB not in plain:
             missing.append("unsubscribe link")

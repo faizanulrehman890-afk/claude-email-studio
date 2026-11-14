@@ -1,0 +1,43 @@
+Subject: What we're baking this weekend
+Preview: Sourdough, seeded rye, a cardamom bun. Pre-order by Thursday, 6 pm.
+
+Rise & Crumb
+
+Hi {{first_name|there}},
+
+The weekend bake is planned and the starter is fed. Soon the racks will be
+full of loaves, their crusts crackling as they cool, and the smell of
+cardamom will reach the door before you do.
+
+Here's what we're baking this weekend:
+
+- Country Sourdough, $12, 900 g loaf. A crackly, deep-baked crust and an
+  open, chewy crumb with a gentle tang from a 36-hour ferment. Hand-shaped
+  and stone-baked. Pickup Saturday and Sunday.
+- Seeded Rye, $14, 800 g loaf. A dense, moist crumb, nutty and earthy, with
+  sunflower, flax and pumpkin seeds and a little caraway. Proofed overnight
+  and baked in a tin. Pickup Saturday only.
+- Cardamom Morning Bun, $5 each. Flaky, buttery layers, laminated by hand
+  and rolled with spiced sugar, warm cardamom and orange zest. Pickup
+  Saturday and Sunday.
+
+Pre-order by Thursday at 6 pm and your bake will be waiting at the counter.
+Pickup is Saturday and Sunday, 8 am–1 pm.
+
+Allergens: all three contain wheat (gluten). The Cardamom Morning Bun
+contains milk, and the Seeded Rye contains seeds. Everything is baked in a
+kitchen that handles wheat, milk, eggs, seeds and tree nuts.
+
+Pre-order for the weekend:
+https://example.com/preorder?utm_source=email&utm_campaign=rc-weekend
+
+See you at the counter,
+Noor & the Rise & Crumb bakers
+
+---
+
+You're getting this because you signed up for Rise & Crumb bake emails.
+Rise & Crumb Bakery, 88 Hearth Street, Unit 3, Asheville, NC 28801, USA
+
+Unsubscribe: https://example.com/unsubscribe?id={{subscriber_id}}
+Manage preferences: https://example.com/preferences?id={{subscriber_id}}

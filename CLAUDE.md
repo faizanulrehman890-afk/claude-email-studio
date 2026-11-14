@@ -21,6 +21,7 @@ Full guide: `brand/voice-guide.md`.
 CLAUDE.md                     project rules (this file)
 brand/voice-guide.md          tone, vocabulary, good vs bad copy, formatting
 brand/products.md             the source of truth for product facts and prices
+brands/<brand>/               other sample brand profiles (voice-guide.md + products.md)
 data/subscribers.csv          FAKE sample subscribers for testing merge tags
 drafts/<slug>/email.html      HTML version of each campaign
 drafts/<slug>/email.txt       plain-text version of each campaign
@@ -28,7 +29,14 @@ notes/                        research and decision notes
 mcp/email_server.py           local practice-outbox MCP server (no network)
 outbox/<slug>/                practice sends (git-ignored)
 .claude/skills/write-email/   the skill for drafting emails (use it)
+.claude/skills/switch-brand/  how to draft/audit for a brand other than Kettlebird
 ```
+
+## Other brands
+
+Kettlebird Tea is the default brand. The studio also holds sample brand profiles under `brands/<brand>/` (currently `rise-and-crumb`, a fictional sourdough bakery) to show the setup is reusable. A draft belongs to another brand when `drafts/<slug>/brand.txt` names it (`--brand <brand>` in a request); see the `switch-brand` skill.
+
+For such a draft, the brand's `voice-guide.md` and `products.md` replace `brand/` (for rules 2 and 5, the brand's banned words are **added** to the house list), and the footer address and reason line come from the `## Email footer` table in its `products.md` (for rule 3). Every other hard rule below applies to every brand, unchanged.
 
 ## Audience segments
 
