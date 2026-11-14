@@ -1,0 +1,2 @@
+# Keep Claude Code agent definitions LF regardless of core.autocrlf
+.claude/agents/*.md text eol=lf
