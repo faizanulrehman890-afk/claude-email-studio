@@ -48,7 +48,7 @@ Every email has these parts, in this order:
 5. **Main body** — short paragraphs (≤ 3 sentences each). Real product details from `brand/products.md`. Bullets are fine for "what's inside".
 6. **Single clear CTA** — one button, action-verb label of 2–5 words.
 7. **Warm sign-off** — in the voice guide's style, e.g. "Steep slowly, — Mara & the Kettlebird team".
-8. **Footer (required)** — the mailing address exactly as written in `CLAUDE.md` (currently `Kettlebird Tea, 14 Wren Lane, Suite 2, Portland, OR 97201, USA`), why they're receiving this ("You're getting this because you subscribed to Kettlebird Tea emails."), an unsubscribe link, and a manage-preferences link.
+8. **Footer (required)** — the mailing address copied exactly from `CLAUDE.md` (Hard rule 3; read it there, don't reuse an address from an older draft), why they're receiving this ("You're getting this because you subscribed to Kettlebird Tea emails."), an unsubscribe link, and a manage-preferences link.
 
 Write in the voice guide's tone. Read the copy aloud in your head; cut anything that sounds like an ad template.
 
